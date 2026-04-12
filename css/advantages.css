@@ -1,0 +1,51 @@
+/* ===== Advantages Section ===== */
+.advantages {
+  background-color: var(--color-bg-alt);
+}
+
+.advantages__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* ===== Advantage Card ===== */
+.advantage-card {
+  text-align: center;
+  padding: var(--space-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--color-white);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.advantage-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(36, 60, 44, 0.08);
+}
+
+.advantage-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(122, 148, 69, 0.1);
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+
+.advantage-card__icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.advantage-card__title {
+  margin-bottom: var(--space-xs);
+}
+
+.advantage-card__text {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}

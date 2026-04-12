@@ -1,0 +1,186 @@
+/* ===== Pricing Section ===== */
+.pricing {
+  background-color: var(--color-bg-alt);
+}
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+/* ===== Pricing Card (base) ===== */
+.pricing-card {
+  position: relative;
+  border-radius: var(--border-radius);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(36, 60, 44, 0.12);
+}
+
+/* ===== Card 1: Vanilla (#ECE69D) ===== */
+.pricing-card--vanilla {
+  background-color: #ECE69D;
+}
+
+.pricing-card--vanilla .pricing-card__name {
+  color: #243C2C;
+}
+
+.pricing-card--vanilla .pricing-card__price {
+  color: #243C2C;
+}
+
+.pricing-card--vanilla .pricing-card__features li {
+  color: #3A5440;
+}
+
+.pricing-card--vanilla .pricing-card__features li::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8L6.5 11.5L13 5' stroke='%23243C2C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.pricing-card--vanilla .pricing-card__cta {
+  background-color: #243C2C;
+  color: #FFFFFF;
+}
+
+.pricing-card--vanilla .pricing-card__cta:hover {
+  background-color: #1a2d20;
+}
+
+/* ===== Card 2: Moss Green (#7A9445) ===== */
+.pricing-card--moss {
+  background-color: #7A9445;
+}
+
+.pricing-card--moss .pricing-card__name {
+  color: #FFFFFF;
+}
+
+.pricing-card--moss .pricing-card__price {
+  color: #ECE69D;
+}
+
+.pricing-card--moss .pricing-card__features li {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pricing-card--moss .pricing-card__features li::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8L6.5 11.5L13 5' stroke='%23ECE69D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.pricing-card--moss .pricing-card__badge {
+  background-color: #ECE69D;
+  color: #243C2C;
+}
+
+.pricing-card--moss .pricing-card__cta {
+  background-color: #ECE69D;
+  color: #243C2C;
+}
+
+.pricing-card--moss .pricing-card__cta:hover {
+  background-color: #e4dd85;
+  color: #243C2C;
+}
+
+/* ===== Card 3: Dark Green (#243C2C) ===== */
+.pricing-card--dark {
+  background-color: #243C2C;
+}
+
+.pricing-card--dark .pricing-card__name {
+  color: #FFFFFF;
+}
+
+.pricing-card--dark .pricing-card__price {
+  color: #ECE69D;
+}
+
+.pricing-card--dark .pricing-card__features li {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pricing-card--dark .pricing-card__features li::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8L6.5 11.5L13 5' stroke='%237A9445' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.pricing-card--dark .pricing-card__cta {
+  background-color: #7A9445;
+  color: #FFFFFF;
+}
+
+.pricing-card--dark .pricing-card__cta:hover {
+  background-color: #6B8239;
+}
+
+/* ===== Badge ===== */
+.pricing-card__badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ===== Card content ===== */
+.pricing-card__name {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--space-xs);
+}
+
+.pricing-card__price {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-md);
+}
+
+/* Feature list */
+.pricing-card__features {
+  margin-bottom: var(--space-lg);
+  flex: 1;
+}
+
+.pricing-card__features li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+.pricing-card__features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.pricing-card__features li:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA */
+.pricing-card__cta {
+  width: 100%;
+  text-align: center;
+}
