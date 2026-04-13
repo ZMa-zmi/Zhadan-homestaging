@@ -243,21 +243,22 @@
 .pricing-card__header {
   position: relative;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .pricing-card__number {
-  position: absolute;
-  top: -2rem;
-  right: -1rem;
   font-family: var(--font-decorative);
-  font-size: 5rem;
+  font-size: clamp(3rem, 8vw, 4.5rem);
   line-height: 1;
   color: rgba(36, 60, 44, 0.1);
   pointer-events: none;
   user-select: none;
   transition: color 0.3s ease;
   z-index: 0;
+  flex-shrink: 0;
+  min-width: auto;
 }
 
 .pricing-card__name {
@@ -271,6 +272,7 @@
   z-index: 1;
   padding-right: 0.5rem;
   word-spacing: 9999px;
+  flex: 1;
 }
 
 /* ===== Divider ===== */
