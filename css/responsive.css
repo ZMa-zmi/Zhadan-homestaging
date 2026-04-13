@@ -1,3 +1,14 @@
+/* =======================================================
+   RESPONSIVE — Mobile-first adaptive layer
+   Breakpoints:
+     ≤1199px  tablet
+     ≤960px   small tablet
+     ≤809px   mobile (portrait tablets / large phones)
+     ≤599px   phones
+     ≤479px   small phones
+     ≤359px   compact phones (iPhone SE, Galaxy A)
+   ======================================================= */
+
 /* ===== Tablet: ≤1199px ===== */
 @media (max-width: 1199px) {
   :root {
@@ -25,9 +36,21 @@
     --container-padding: 1.25rem;
     --space-section: var(--space-lg);
     --header-height: 60px;
+    /* Tighten spacing scale on mobile */
+    --space-xl:  3rem;
+    --space-2xl: 4.5rem;
   }
 
-  /* ----- Header Mobile ----- */
+  /* ---- Prevent horizontal overflow ---- */
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* ============================================
+     HEADER — Mobile
+     ============================================ */
   .header__nav:not(.is-open) {
     display: none;
   }
@@ -39,70 +62,281 @@
   .header__burger {
     display: flex;
     flex-shrink: 0;
+    position: relative;
+    z-index: calc(var(--z-modal) - 5); /* 195 */
   }
 
-  /* ----- Hero Mobile ----- */
-  .hero__page-title {
-    left: 1.25rem;
-    max-width: 260px;
+  /* When menu is open, fix burger so it floats above the full-screen overlay (z-190) */
+  .header__burger[aria-expanded="true"] {
+    position: fixed;
+    top: calc((var(--header-height) - 32px) / 2);
+    right: var(--container-padding);
+    z-index: calc(var(--z-modal) - 5); /* 195 */
+  }
+
+  /* Burger lines always white when menu is open (dark overlay behind) */
+  .header__burger[aria-expanded="true"] .burger-line {
+    background: #fff !important;
+  }
+
+  /* Mobile nav overlay — inherits z-index from header.css (190) */
+  .header__nav.is-open {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: var(--color-text);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: var(--header-height) 2rem 3rem;
+    overflow-y: auto;
+  }
+
+  .header__nav.is-open .header__nav-list {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .header__nav.is-open .header__nav-link {
+    display: block;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.2s ease;
+  }
+
+  .header__nav.is-open .header__nav-list li:last-child .header__nav-link {
+    border-bottom: none;
+  }
+
+  .header__nav.is-open .header__nav-link:hover,
+  .header__nav.is-open .header__nav-link:focus-visible {
+    color: #fff;
+  }
+
+  /* CTA inside mobile menu — injected via JS as .header__nav-cta */
+  .header__nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .header__nav-cta:hover,
+  .header__nav-cta:focus-visible {
+    background: var(--color-accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .header__nav-cta:active {
+    transform: scale(0.97);
+  }
+
+  /* ============================================
+     HERO — Mobile
+     ============================================ */
+  .hero {
+    /* Disable parallax on mobile (performance + iOS bug) */
+    background-attachment: scroll;
+    min-height: 100svh; /* safe-area aware on modern iOS */
   }
 
   .hero__brand-wordmark {
-    padding: 0 1rem 1.5rem 1rem;
+    padding: 0 1.25rem 1.75rem;
+    /* Prevent fixed wordmark from causing overflow on small screens */
+    width: 100%;
+    left: 0;
+    right: 0;
   }
 
-  /* ----- Advantages Mobile ----- */
+  .hero__brand-wordmark > span {
+    font-size: clamp(2rem, 11vw, 4rem);
+    white-space: normal;
+    word-break: break-word;
+    hyphens: auto;
+    line-height: 1.1;
+  }
+
+  /* ============================================
+     ADVANTAGES — Mobile
+     ============================================ */
   .advantages__grid {
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
 
-  /* ----- Portfolio Mobile ----- */
-  .portfolio__grid {
-    grid-template-columns: 1fr;
+  /* Advantage card: horizontal layout on mobile (≤809px, portrait) */
+  .advantage-card {
+    padding: 1.25rem 1.25rem;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    align-items: start;
   }
 
-  /* Mobile: overlay always visible */
+  .advantage-card__icon {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0;
+    align-self: center;
+  }
+
+  .advantage-card__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .advantage-card__title {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0.25rem;
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+  }
+
+  .advantage-card__text {
+    grid-column: 2;
+    grid-row: 2;
+    margin-bottom: 0;
+  }
+
+  /* ============================================
+     PORTFOLIO — Mobile
+     ============================================ */
+  .portfolio__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  /* Overlay always visible on touch devices */
   .portfolio__overlay {
     opacity: 1;
     background: linear-gradient(
       to top,
-      rgba(36, 60, 44, 0.8) 0%,
-      transparent 100%
+      rgba(36, 60, 44, 0.82) 0%,
+      rgba(36, 60, 44, 0.2)  60%,
+      transparent            100%
     );
   }
 
-  /* ----- Pricing Mobile ----- */
-  .pricing__grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+  .portfolio__item-title {
+    font-size: clamp(1.1rem, 4vw, 1.35rem);
   }
 
-  /* Remove tilt on mobile for readability */
+  /* ============================================
+     PRICING — Mobile
+     ============================================ */
+  .pricing__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Remove tilts: they cause horizontal overflow at ≤809px */
+  .pricing-card,
   .pricing-card:nth-child(1),
   .pricing-card:nth-child(2),
   .pricing-card:nth-child(3) {
-    rotate: none;
-    margin-top: 0;
+    transform: none !important;
+    margin-top: 0 !important;
   }
 
-  /* Reduce shadow offset on mobile */
+  .pricing-card:hover,
+  .pricing-card:nth-child(1):hover,
+  .pricing-card:nth-child(2):hover,
+  .pricing-card:nth-child(3):hover {
+    transform: translateY(-4px) !important;
+  }
+
+  /* Reduce shadow offset so it doesn't clip */
   .pricing-card__shadow {
-    translate: 5px 5px;
+    transform: translate(5px, 5px);
   }
 
   .pricing-card:hover .pricing-card__shadow {
-    translate: 7px 7px;
+    transform: translate(7px, 7px);
   }
 
+  /* Tighten card padding on narrow screens */
+  .pricing-card__body {
+    padding: 1.5rem 1.375rem;
+  }
 
-  /* ----- Contacts Mobile ----- */
+  .pricing-card__number {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .pricing-card__name {
+    font-size: clamp(1.3rem, 5vw, 1.6rem);
+    /* On full-width mobile column, word-spacing hack not needed */
+    word-spacing: normal;
+  }
+
+  /* ============================================
+     CONTACTS — Mobile
+     ============================================ */
   .contacts__inner {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
   }
 
-  /* ----- Footer Mobile ----- */
+  .contacts__info {
+    padding-top: 0;
+    order: -1; /* Show info block above form on mobile */
+  }
+
+  /* Larger tap targets for inputs */
+  .form-input {
+    padding: 1rem 1rem;
+    font-size: 1rem; /* Prevents iOS zoom on focus */
+    border-radius: var(--border-radius-sm);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Full-width submit button on mobile */
+  .contacts__submit {
+    width: 100%;
+  }
+
+  /* ============================================
+     MODAL — Mobile
+     ============================================ */
+  .modal {
+    padding: var(--space-sm);
+    align-items: flex-end; /* Sheet from bottom on mobile */
+  }
+
+  .modal__content {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0; /* Bottom sheet style */
+    padding: var(--space-md);
+    padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* ============================================
+     FOOTER — Mobile
+     ============================================ */
   .footer__inner {
     flex-direction: column;
     text-align: center;
@@ -110,33 +344,273 @@
   }
 }
 
-/* ===== Small phones: ≤480px ===== */
-@media (max-width: 480px) {
+/* ===== Phones: ≤599px ===== */
+@media (max-width: 599px) {
+  :root {
+    --container-padding: 1rem;
+    --space-section: 2.5rem;
+  }
+
+  /* ----- Hero ----- */
+  .hero__brand-wordmark > span {
+    font-size: clamp(1.75rem, 12vw, 3.25rem);
+  }
+
+  /* ----- Section titles ----- */
+  .section__title {
+    font-size: clamp(1.65rem, 7vw, 2.4rem);
+    letter-spacing: -0.02em;
+  }
+
+  .section__subtitle {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  /* ----- Advantages: keep horizontal grid, just tighten padding ----- */
+  .advantage-card {
+    padding: 1rem 1rem;
+    column-gap: 0.875rem;
+  }
+
+  .advantage-card__title {
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+  }
+
+  /* ----- Portfolio filters: horizontal scroll ----- */
+  .portfolio__filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+    /* Hide scrollbar but keep scroll */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .portfolio__filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .portfolio__filter-btn {
+    flex-shrink: 0;
+    padding: 0.45rem 1rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  /* ----- Pricing card padding ----- */
+  .pricing-card__body {
+    padding: 1.25rem 1.125rem;
+  }
+
+  .pricing-card__price {
+    font-size: clamp(1.6rem, 6vw, 2.25rem);
+  }
+
+  /* ----- Form ----- */
+  .contacts__form {
+    gap: var(--space-sm);
+  }
+
+  /* ----- Buttons ----- */
+  .btn-primary,
+  .btn-outline {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== Small phones: ≤479px ===== */
+@media (max-width: 479px) {
+  /* Stack hero action buttons */
   .hero__actions {
     flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
   }
 
   .hero__actions .btn-primary,
   .hero__actions .btn-outline {
     width: 100%;
+    justify-content: center;
   }
 
-  .portfolio__filters {
-    gap: 0.375rem;
-  }
-
-  .portfolio__filter-btn {
-    padding: 0.375rem 0.875rem;
-    font-size: 0.75rem;
-  }
-
+  /* Slider handle */
   .slider__handle-circle {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
   .slider__handle-circle svg {
     width: 18px;
     height: 18px;
+  }
+
+  /* Social links touch size */
+  .social-link {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Tighten modal on very small screens */
+  .modal__content {
+    padding: 1.25rem 1.125rem;
+    padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ===== Compact phones: ≤359px (iPhone SE 1st gen, Galaxy A series) ===== */
+@media (max-width: 359px) {
+  :root {
+    --container-padding: 0.875rem;
+  }
+
+  .header__logo-text {
+    font-size: 1.25rem;
+  }
+
+  .hero__brand-wordmark > span {
+    font-size: clamp(1.5rem, 13vw, 2.5rem);
+  }
+
+  .section__title {
+    font-size: clamp(1.4rem, 8vw, 1.9rem);
+  }
+
+  .pricing-card__number {
+    font-size: 2.25rem;
+  }
+
+  .pricing-card__name {
+    font-size: 1.2rem;
+  }
+
+  .pricing-card__price {
+    font-size: 1.5rem;
+  }
+
+  .pricing-card__body {
+    padding: 1rem 0.875rem;
+  }
+}
+
+/* ===== Touch device: disable hover-only effects that break on tap ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Portfolio overlay always visible */
+  .portfolio__overlay {
+    opacity: 1;
+  }
+
+  /* Advantage card: disable 3D tilt — no pointer tracking on touch */
+  .advantage-card {
+    transform: none !important;
+    perspective: none;
+  }
+
+  .advantage-card::after {
+    display: none;
+  }
+
+  /* Pricing card — no hover shift, use active instead */
+  .pricing-card:hover,
+  .pricing-card:nth-child(1):hover,
+  .pricing-card:nth-child(2):hover,
+  .pricing-card:nth-child(3):hover {
+    transform: none !important;
+  }
+
+  .pricing-card:active {
+    transform: scale(0.985) !important;
+  }
+
+  .pricing-card:hover .pricing-card__shadow {
+    transform: translate(5px, 5px);
+  }
+
+  /* Portfolio image — no zoom-on-hover on touch */
+  .portfolio__img-wrapper:hover img {
+    transform: none;
+  }
+
+  /* Nav links — remove underline animation on touch */
+  .header__nav-link::after {
+    display: none;
+  }
+
+  /* Buttons — use active state instead of hover */
+  .btn-primary:hover,
+  .btn-outline:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  .btn-outline:active {
+    transform: scale(0.97);
+  }
+
+  /* Social links */
+  .social-link:hover {
+    transform: none;
+  }
+
+  .social-link:active {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+  }
+}
+
+/* ===== Landscape mobile (phones in landscape) ===== */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero__brand-wordmark {
+    padding-bottom: 1rem;
+  }
+
+  .hero__brand-wordmark > span {
+    font-size: clamp(1.5rem, 7vw, 3rem);
+  }
+
+  /* Reduce section padding in landscape */
+  .section {
+    padding-block: var(--space-lg);
+  }
+
+  .header__nav.is-open {
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: calc(var(--header-height) + 1rem);
+  }
+}
+
+/* ===== Safe area insets (notched phones, Dynamic Island) ===== */
+@supports (padding: max(0px)) {
+  .site-header {
+    padding-left: max(2.5rem, env(safe-area-inset-left));
+    padding-right: max(2.5rem, env(safe-area-inset-right));
+  }
+
+  @media (max-width: 809px) {
+    .site-header {
+      padding-left: max(var(--container-padding), env(safe-area-inset-left));
+      padding-right: max(var(--container-padding), env(safe-area-inset-right));
+    }
+
+    .container {
+      padding-left: max(var(--container-padding), env(safe-area-inset-left));
+      padding-right: max(var(--container-padding), env(safe-area-inset-right));
+    }
+
+    .site-footer {
+      padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+    }
   }
 }

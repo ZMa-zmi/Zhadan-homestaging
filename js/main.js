@@ -20,25 +20,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
 
   if (burger && nav) {
+    // Inject CTA link into mobile nav (once)
+    if (!nav.querySelector('.header__nav-cta')) {
+      const ctaLink = document.createElement('a');
+      ctaLink.href = '#contacts';
+      ctaLink.className = 'header__nav-cta';
+      ctaLink.textContent = 'Оставить заявку';
+      nav.appendChild(ctaLink);
+    }
+
+    // Remember original parent to restore nav on close
+    const navOriginalParent = nav.parentElement;
+    const navNextSibling = nav.nextElementSibling;
+
+    const openMenu = () => {
+      // Move nav to <body> to escape any stacking context created by header
+      document.body.appendChild(nav);
+      nav.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('no-scroll');
+    };
+
+    const closeMenu = () => {
+      nav.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
+      // Return nav to its original place in the header
+      if (navNextSibling) {
+        navOriginalParent.insertBefore(nav, navNextSibling);
+      } else {
+        navOriginalParent.appendChild(nav);
+      }
+    };
+
     burger.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      burger.setAttribute('aria-expanded', isOpen);
-      document.body.classList.toggle('no-scroll', isOpen);
+      if (nav.classList.contains('is-open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
     nav.addEventListener('click', (e) => {
-      if (e.target.matches('.header__nav-link')) {
-        nav.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('no-scroll');
+      if (e.target.matches('.header__nav-link') || e.target.matches('.header__nav-cta')) {
+        closeMenu();
       }
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-        nav.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('no-scroll');
+        closeMenu();
         burger.focus();
       }
     });

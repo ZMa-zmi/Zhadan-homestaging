@@ -165,7 +165,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: calc(var(--z-header) + 1);
+  z-index: calc(var(--z-modal) - 5); /* 195 — above nav overlay (190) */
 }
 
 .burger-line {
@@ -188,6 +188,15 @@
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
+/* CTA injected by JS — hidden until inside open mobile nav */
+.header__nav-cta {
+  display: none;
+}
+
+.header__nav.is-open .header__nav-cta {
+  display: inline-flex;
+}
+
 /* ===== Mobile nav overlay ===== */
 .header__nav.is-open {
   display: flex;
@@ -197,7 +206,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: calc(var(--z-header) - 1);
+  /* Sits directly in <body> when open (moved by JS) — above all page content */
+  z-index: calc(var(--z-modal) - 10); /* 190 */
+  overflow-y: auto;
 }
 
 .header__nav.is-open .header__nav-list {
