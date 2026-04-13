@@ -41,6 +41,8 @@
   <script src="js/form.js" defer></script>
   <script src="js/modal.js" defer></script>
   <script src="js/animations.js" defer></script>
+  <script src="js/text-effect.js" defer></script>
+  <script src="js/text-effect-init.js" defer></script>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -64,60 +66,80 @@
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="site-header" id="header">
-    <div class="container header__inner">
-      <a href="#" class="header__logo" aria-label="ЖаданСтейджинг — на главную">
-        <svg class="header__logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M8 28C8 28 4 20 8 12C12 4 16 2 16 2C16 2 12 10 14 16C16 22 20 24 20 24" stroke="#7A9445" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M14 28C14 28 18 22 22 16C26 10 24 4 24 4C24 4 28 12 26 18C24 24 20 28 20 28" stroke="#59789F" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="16" cy="8" r="2" fill="#7A9445" opacity="0.6"/>
-          <circle cx="22" cy="12" r="1.5" fill="#59789F" opacity="0.6"/>
-        </svg>
-        <span class="header__logo-text">ЖаданСтейджинг</span>
-      </a>
+  <!-- ===== HERO + HEADER (Tilesuite-style: header overlaid on fullscreen hero) ===== -->
+  <div class="hero-wrapper" id="hero">
 
-      <nav class="header__nav" id="nav" aria-label="Основная навигация">
-        <ul class="header__nav-list">
-          <li><a href="#hero" class="header__nav-link">Главная</a></li>
-          <li><a href="#portfolio" class="header__nav-link">Портфолио</a></li>
-          <li><a href="#pricing" class="header__nav-link">Цены</a></li>
-          <li><a href="#contacts" class="header__nav-link">Контакты</a></li>
-        </ul>
-      </nav>
+    <!-- Sticky header overlaid on top of hero -->
+    <header class="site-header" id="header">
+      <div class="header__inner">
 
-      <a href="#contacts" class="btn-primary header__cta">Оставить заявку</a>
-
-      <button class="header__burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <main>
-    <!-- ===== HERO ===== -->
-    <section class="hero section" id="hero" style="background-image: url('photo-1757924461488-ef9ad0670978.avif');">
-      <div class="hero__overlay"></div>
-      <div class="container hero__inner">
-        <div class="hero__content reveal">
-          <h1 class="hero__title">Искусство влюблять в&nbsp;недвижимость</h1>
-          <p class="hero__subtitle">
-            Профессионально готовим квартиры к продаже и аренде, увеличивая их стоимость на 15–20% за&nbsp;3&nbsp;дня
-          </p>
-          <div class="hero__actions">
-            <a href="#contacts" class="btn-primary hero__cta">Обсудить проект</a>
-            <a href="#portfolio" class="btn-outline hero__cta-secondary">Смотреть работы</a>
-          </div>
+        <!-- Logo wordmark (SVG text) -->
+        <div class="header__logo-wrap">
+          <a href="#" class="header__logo" aria-label="Жадан стейджинг — на главную">
+            <span class="header__logo-text"
+                  data-text-effect
+                  data-text-effect-preset="blur"
+                  data-text-effect-per="char"
+                  data-text-effect-delay="0.2">Жадан стейджинг</span>
+          </a>
         </div>
+
+        <!-- Centered nav -->
+        <nav class="header__nav" id="nav" aria-label="Основная навигация">
+          <ul class="header__nav-list">
+            <li><a href="#advantages" class="header__nav-link">О нас</a></li>
+            <li><a href="#portfolio" class="header__nav-link">Портфолио</a></li>
+            <li><a href="#pricing" class="header__nav-link">Цены</a></li>
+            <li><a href="#contacts" class="header__nav-link">Контакты</a></li>
+          </ul>
+        </nav>
+
+        <!-- Right actions -->
+        <div class="header__actions">
+          <a href="#contacts" class="header__cta-btn btn-shine-border">
+            <span class="btn-glow"></span>
+            <span class="header__cta-text">Оставить заявку</span>
+            <span class="header__cta-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 181 181" fill="currentColor" width="14" height="14">
+                <polygon points="177.8 90.1 177.1 89.7 88 .7 88 26.7 142.5 81.2 2 81.2 2 99.6 142.3 99.6 88 152.1 88 152.1 88 178.2 177.8 90.4 177.6 90.2 177.8 90.1"/>
+              </svg>
+            </span>
+          </a>
+          <button class="header__burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Hero background image -->
+    <section class="hero section" style="background-image: url('photo-1757924461488-ef9ad0670978.avif');">
+      <div class="hero__overlay"></div>
+
+
+      <!-- Giant wordmark at bottom (Tilesuite pattern) -->
+      <div class="hero__brand-wordmark" id="wordmark" aria-hidden="true">
+        <span data-text-effect
+              data-text-effect-preset="blur"
+              data-text-effect-per="char"
+              data-text-effect-delay="0.2">ЖаданСтейджинг</span>
       </div>
     </section>
+
+  </div><!-- /.hero-wrapper -->
+
+  <main>
 
     <!-- ===== ADVANTAGES ===== -->
     <section class="advantages section" id="advantages">
       <div class="container">
-        <h2 class="section__title reveal">Скорость. Эстетика. Окупаемость.</h2>
+        <h2 class="section__title reveal"
+            data-text-effect
+            data-text-effect-preset="slide"
+            data-text-effect-per="word"
+            data-text-effect-scroll>Скорость. Эстетика. Окупаемость.</h2>
         <p class="section__subtitle reveal">Три причины доверить нам подготовку вашего объекта</p>
 
         <div class="advantages__grid reveal-stagger">
@@ -165,7 +187,11 @@
     <!-- ===== PORTFOLIO ===== -->
     <section class="portfolio section" id="portfolio">
       <div class="container">
-        <h2 class="section__title reveal">Портфолио</h2>
+        <h2 class="section__title reveal"
+            data-text-effect
+            data-text-effect-preset="slide"
+            data-text-effect-per="word"
+            data-text-effect-scroll>Портфолио</h2>
         <p class="section__subtitle reveal">Проекты, которые продают сами себя</p>
 
         <div class="portfolio__filters reveal" role="group" aria-label="Фильтр по типу">
@@ -249,48 +275,155 @@
     <!-- ===== PRICING ===== -->
     <section class="pricing section" id="pricing">
       <div class="container">
-        <h2 class="section__title reveal">Тарифы</h2>
-        <p class="section__subtitle reveal">Выберите подходящий формат работы</p>
+        <span class="pricing__tag reveal">Форматы работы</span>
+        <h2 class="section__title reveal"
+            data-text-effect
+            data-text-effect-preset="slide"
+            data-text-effect-per="word"
+            data-text-effect-scroll>Тарифы</h2>
+        <p class="section__subtitle reveal">Выберите подходящий формат — от быстрой консультации до полного преображения</p>
 
         <div class="pricing__grid reveal-stagger">
+
+          <!-- Card 1: Консультация -->
           <article class="pricing-card pricing-card--vanilla reveal">
-            <h3 class="pricing-card__name">Консультация</h3>
-            <p class="pricing-card__price">от 5 000 ₽</p>
-            <ul class="pricing-card__features">
-              <li>Анализ объекта (онлайн или очно)</li>
-              <li>Рекомендации по подготовке</li>
-              <li>Чек-лист для самостоятельной работы</li>
-              <li>Подбор стилевого направления</li>
-            </ul>
-            <button type="button" class="btn-primary pricing-card__cta" data-modal="pricing" data-plan="Консультация" data-desc="Консультация — быстрый старт для подготовки вашей квартиры. Расскажем, что нужно сделать, и составим план действий.">Задать вопрос</button>
+            <div class="pricing-card__shadow"></div>
+            <div class="pricing-card__body">
+              <div class="pricing-card__header">
+                <span class="pricing-card__number" aria-hidden="true">01</span>
+                <h3 class="pricing-card__name">Консультация</h3>
+              </div>
+              <hr class="pricing-card__divider">
+              <div class="pricing-card__price-block">
+                <p class="pricing-card__price">от 5 000 ₽</p>
+                <p class="pricing-card__price-note">разовая услуга</p>
+              </div>
+              <ul class="pricing-card__features">
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Анализ объекта (онлайн или очно)</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Рекомендации по подготовке</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Чек-лист для самостоятельной работы</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Подбор стилевого направления</span>
+                </li>
+              </ul>
+              <button type="button" class="pricing-card__cta" data-modal="pricing" data-plan="Консультация" data-desc="Консультация — быстрый старт для подготовки вашей квартиры. Расскажем, что нужно сделать, и составим план действий.">Задать вопрос</button>
+            </div>
           </article>
 
+          <!-- Card 2: Базовый стейджинг (Popular) -->
           <article class="pricing-card pricing-card--moss reveal">
-            <span class="pricing-card__badge">Популярный</span>
-            <h3 class="pricing-card__name">Базовый стейджинг</h3>
-            <p class="pricing-card__price">от 50 000 ₽</p>
-            <ul class="pricing-card__features">
-              <li>Консультация + выезд на объект</li>
-              <li>Расстановка имеющейся мебели</li>
-              <li>Декорирование текстилем и аксессуарами</li>
-              <li>Фотосъёмка результата</li>
-              <li>Срок: 3–5 дней</li>
-            </ul>
-            <button type="button" class="btn-primary pricing-card__cta" data-modal="pricing" data-plan="Базовый стейджинг" data-desc="Базовый стейджинг — оптимальное соотношение вложений и результата. Расскажем детали и рассчитаем стоимость для вашей квартиры.">Задать вопрос</button>
+            <div class="pricing-card__shadow"></div>
+            <div class="pricing-card__body">
+              <span class="pricing-card__badge">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                Популярный
+              </span>
+              <div class="pricing-card__header">
+                <span class="pricing-card__number" aria-hidden="true">02</span>
+                <h3 class="pricing-card__name">Базовый стейджинг</h3>
+              </div>
+              <hr class="pricing-card__divider">
+              <div class="pricing-card__price-block">
+                <p class="pricing-card__price">от 50 000 ₽</p>
+                <p class="pricing-card__price-note">срок: 3–5 дней</p>
+              </div>
+              <ul class="pricing-card__features">
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Консультация + выезд на объект</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Расстановка имеющейся мебели</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Декорирование текстилем и аксессуарами</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Фотосъёмка результата</span>
+                </li>
+              </ul>
+              <button type="button" class="pricing-card__cta" data-modal="pricing" data-plan="Базовый стейджинг" data-desc="Базовый стейджинг — оптимальное соотношение вложений и результата. Расскажем детали и рассчитаем стоимость для вашей квартиры.">Задать вопрос</button>
+            </div>
           </article>
 
+          <!-- Card 3: Полное преображение -->
           <article class="pricing-card pricing-card--dark reveal">
-            <h3 class="pricing-card__name">Полное преображение</h3>
-            <p class="pricing-card__price">от 150 000 ₽</p>
-            <ul class="pricing-card__features">
-              <li>Всё из «Базового» пакета</li>
-              <li>Аренда мебели и декора</li>
-              <li>Мелкий косметический ремонт</li>
-              <li>Профессиональная фотосессия</li>
-              <li>Сопровождение до продажи</li>
-            </ul>
-            <button type="button" class="btn-primary pricing-card__cta" data-modal="pricing" data-plan="Полное преображение" data-desc="Полное преображение — комплексная подготовка вашей квартиры под ключ. Обсудим детали и подберём лучшее решение.">Задать вопрос</button>
+            <div class="pricing-card__shadow"></div>
+            <div class="pricing-card__body">
+              <div class="pricing-card__header">
+                <span class="pricing-card__number" aria-hidden="true">03</span>
+                <h3 class="pricing-card__name">Полное преображение</h3>
+              </div>
+              <hr class="pricing-card__divider">
+              <div class="pricing-card__price-block">
+                <p class="pricing-card__price">от 150 000 ₽</p>
+                <p class="pricing-card__price-note">под ключ</p>
+              </div>
+              <ul class="pricing-card__features">
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Всё из «Базового» пакета</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Аренда мебели и декора</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Мелкий косметический ремонт</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Профессиональная фотосессия</span>
+                </li>
+                <li>
+                  <span class="pricing-card__check" aria-hidden="true">
+                    <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Сопровождение до продажи</span>
+                </li>
+              </ul>
+              <button type="button" class="pricing-card__cta" data-modal="pricing" data-plan="Полное преображение" data-desc="Полное преображение — комплексная подготовка вашей квартиры под ключ. Обсудим детали и подберём лучшее решение.">Задать вопрос</button>
+            </div>
           </article>
+
         </div>
       </div>
     </section>

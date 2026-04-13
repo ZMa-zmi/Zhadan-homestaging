@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ===== Header scroll shadow ===== */
+  /* ===== Header: transparent over hero, fixed+opaque after scroll ===== */
   const header = document.getElementById('header');
+  const heroWrapper = document.getElementById('hero');
 
-  if (header) {
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('header--scrolled', window.scrollY > 50);
-    }, { passive: true });
+  if (header && heroWrapper) {
+    const heroBottom = () => heroWrapper.offsetTop + heroWrapper.offsetHeight;
+
+    const onScroll = () => {
+      const past = window.scrollY + header.offsetHeight > heroBottom() - 80;
+      header.classList.toggle('header--fixed', past);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // init
   }
 
   /* ===== Mobile burger menu ===== */
@@ -14,30 +21,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (burger && nav) {
     burger.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('header__nav--open');
+      const isOpen = nav.classList.toggle('is-open');
       burger.setAttribute('aria-expanded', isOpen);
       document.body.classList.toggle('no-scroll', isOpen);
     });
 
-    // Close menu on nav link click
     nav.addEventListener('click', (e) => {
       if (e.target.matches('.header__nav-link')) {
-        nav.classList.remove('header__nav--open');
+        nav.classList.remove('is-open');
         burger.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('no-scroll');
       }
     });
 
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('header__nav--open')) {
-        nav.classList.remove('header__nav--open');
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open');
         burger.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('no-scroll');
         burger.focus();
       }
     });
   }
+
+  /* ===== Advantage cards: 3D skew / tilt on mouse move ===== */
+  (function initCardTilt() {
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!isFinePointer) return;
+
+    const cards = document.querySelectorAll('.advantage-card');
+    if (!cards.length) return;
+
+    const MAX_TILT = 12; // degrees
+    const PERSPECTIVE = 800; // px
+
+    cards.forEach((card) => {
+      // Wrap card in a perspective container without touching the DOM structure
+      card.style.perspective = PERSPECTIVE + 'px';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        // Normalised mouse position within card: -0.5 .. +0.5
+        const nx = (e.clientX - rect.left) / rect.width - 0.5;
+        const ny = (e.clientY - rect.top) / rect.height - 0.5;
+
+        const rotX = -ny * MAX_TILT; // tilt up/down (inverted)
+        const rotY =  nx * MAX_TILT; // tilt left/right
+
+        card.style.transition = 'box-shadow 0.1s ease';
+        card.style.transform = `perspective(${PERSPECTIVE}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03, 1.03, 1.03)`;
+
+        // Drive glare position via CSS custom props (percentage from top-left)
+        const pctX = ((e.clientX - rect.left) / rect.width) * 100;
+        const pctY = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', pctX + '%');
+        card.style.setProperty('--my', pctY + '%');
+
+        card.classList.add('is-tilting');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease';
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        card.classList.remove('is-tilting');
+      });
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'box-shadow 0.1s ease';
+      });
+    });
+  })();
 
   /* ===== Active nav link highlighting ===== */
   const sections = document.querySelectorAll('main .section[id]');

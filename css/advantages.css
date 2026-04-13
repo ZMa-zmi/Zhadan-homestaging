@@ -11,16 +11,48 @@
 
 /* ===== Advantage Card ===== */
 .advantage-card {
+  position: relative;
   text-align: center;
   padding: var(--space-lg);
   border-radius: var(--border-radius);
   background-color: var(--color-white);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  /* perspective set on parent via JS wrapper, but we keep the base transition for reset */
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+}
+
+/* Glare overlay */
+.advantage-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius);
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.advantage-card.is-tilting::after {
+  opacity: 1;
 }
 
 .advantage-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(36, 60, 44, 0.08);
+  box-shadow: 0 20px 48px rgba(36, 60, 44, 0.12), 0 4px 12px rgba(36, 60, 44, 0.06);
+}
+
+/* Ensure card content sits above glare */
+.advantage-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 .advantage-card__icon {

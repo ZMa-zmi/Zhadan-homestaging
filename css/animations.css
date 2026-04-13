@@ -43,3 +43,259 @@
     transition-delay: 0s;
   }
 }
+
+/* ===================================================================
+   TextEffect — vanilla JS component styles
+   =================================================================== */
+
+/* Host element: keep whitespace so split spans lay out correctly */
+[data-text-effect] {
+  white-space: pre-wrap;
+}
+
+/* Per-line: clip overflow so slide-up doesn't bleed outside */
+[data-text-effect-per="line"] {
+  overflow: visible;
+}
+
+[data-text-effect-per="line"] > span {
+  display: block;
+  overflow: hidden;
+}
+
+/* Char / word spans — rendered inline-block by JS, prevent wrapping artifacts */
+[data-text-effect-per="word"] > span,
+[data-text-effect-per="char"] > span {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* Reduced motion: instantly reveal all text-effect spans */
+@media (prefers-reduced-motion: reduce) {
+  [data-text-effect] span {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Glowing Shadow Button Effect ===== */
+
+/* Registered custom properties for animatable CSS vars (inherits:true so children can read them) */
+@property --gs-hue {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --gs-rotate {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --gs-bg-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 50;
+}
+@property --gs-bg-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 50;
+}
+@property --gs-glow-translate-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: -65;
+}
+@property --gs-bg-size {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --gs-glow-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.45;
+}
+@property --gs-glow-blur {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 6;
+}
+@property --gs-glow-scale {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1.5;
+}
+@property --gs-glow-radius {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 100;
+}
+@property --gs-white-shadow {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Keyframes */
+
+/* Palette shimmer: olive #7A9445 (hue≈80°) → grass (hue≈100°) → deep green #243C2C (hue≈130°) */
+@keyframes gs-hue-spin {
+  0%   { --gs-hue: 78;  }
+  50%  { --gs-hue: 115; }
+  100% { --gs-hue: 78;  }
+}
+
+@keyframes gs-rotate-glow {
+  from { --gs-rotate: -70; --gs-glow-translate-y: -65; }
+  to   { --gs-rotate: 290; --gs-glow-translate-y: -65; }
+}
+
+@keyframes gs-move-bg {
+  0%   { --gs-bg-x: 0;   --gs-bg-y: 0;   }
+  25%  { --gs-bg-x: 100; --gs-bg-y: 0;   }
+  50%  { --gs-bg-x: 100; --gs-bg-y: 100; }
+  75%  { --gs-bg-x: 0;   --gs-bg-y: 100; }
+  100% { --gs-bg-x: 0;   --gs-bg-y: 0;   }
+}
+
+@keyframes gs-shadow-pulse {
+  0%,  24%, 46%, 73%, 96% { --gs-white-shadow: 0.5; }
+  12%, 28%, 41%, 63%, 75%, 82%, 98% { --gs-white-shadow: 2.5; }
+  6%,  32%, 57% { --gs-white-shadow: 1.3; }
+  18%, 52%, 88% { --gs-white-shadow: 3.5; }
+}
+
+/* ---- Base button reset ---- */
+.btn-shine-border {
+  position: relative;
+  overflow: visible !important; /* glow bleeds outside */
+  border-color: transparent !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* animation timing vars */
+  --gs-speed: 4s;
+  --gs-interact: 0.55s;
+}
+
+/* ---- Rotating gradient border (::before) — thin 1px ring ---- */
+.btn-shine-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: hsl(0deg 0% 6%) radial-gradient(
+    28% 28% at calc(var(--gs-bg-x) * 1%) calc(var(--gs-bg-y) * 1%),
+    hsl(calc(var(--gs-hue) * 1deg) 35% 58%) calc(0%  * var(--gs-bg-size)),
+    hsl(calc(var(--gs-hue) * 1deg) 40% 38%) calc(20% * var(--gs-bg-size)),
+    hsl(calc(var(--gs-hue) * 1deg) 30% 22%) calc(40% * var(--gs-bg-size)),
+    transparent 100%
+  );
+  animation:
+    gs-hue-spin  var(--gs-speed) ease-in-out infinite,
+    gs-move-bg   var(--gs-speed) linear infinite;
+  transition: --gs-bg-size var(--gs-interact) ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---- Inner fill (::after) — 1px inset matches thin border ---- */
+.btn-shine-border::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: rgba(6, 18, 10, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1;
+  pointer-events: none;
+  transition:
+    box-shadow var(--gs-interact) ease,
+    background var(--gs-interact) ease;
+}
+
+/* Fixed header fill — solid dark green-tinted */
+.header--fixed .btn-shine-border::after {
+  background: #071510;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ---- Floating glow orb — lives as a pseudo of the wrapper ---- */
+/* We use a sibling <span class="btn-glow"> injected by JS */
+.btn-glow {
+  display: block;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  left: 50%;
+  top: 50%;
+  margin: -18px 0 0 -18px;
+  border-radius: calc(var(--gs-glow-radius) * 1vw);
+  animation: gs-rotate-glow var(--gs-speed) linear infinite;
+  transform: rotateZ(calc(var(--gs-rotate) * 1deg));
+  transform-origin: center;
+  pointer-events: none;
+  z-index: -1;
+  transition:
+    --gs-glow-blur    0.05s ease,
+    --gs-glow-opacity 0.05s ease,
+    --gs-glow-scale   0.05s ease,
+    --gs-glow-radius  0.05s ease;
+}
+
+.btn-glow::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  left: -15%;
+  top: -15%;
+  border-radius: inherit;
+  background: hsl(calc(var(--gs-hue) * 1deg) 35% 28%);
+  filter: blur(calc(var(--gs-glow-blur) * 10px));
+  transform:
+    scaleY(calc(var(--gs-glow-scale) / 1.1))
+    scaleX(calc(var(--gs-glow-scale) * 1.2))
+    translateY(calc(var(--gs-glow-translate-y) * 1%));
+  opacity: var(--gs-glow-opacity);
+  animation: gs-hue-spin var(--gs-speed) ease-in-out infinite;
+}
+
+/* Text and icon stay above */
+.btn-shine-border .header__cta-text,
+.btn-shine-border .header__cta-icon {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Hover state ---- */
+.btn-shine-border:hover::before {
+  --gs-bg-size: 15;
+  animation-play-state: paused;
+}
+
+.btn-shine-border:hover::after {
+  background: rgba(8, 20, 10, 0.82);
+  box-shadow:
+    0 0 8px 1px rgba(90, 110, 50, 0.18),
+    0 0 18px 3px rgba(36, 60, 44, 0.10);
+}
+
+.btn-shine-border:hover .btn-glow {
+  --gs-glow-blur: 1.5;
+  --gs-glow-opacity: 0.6;
+  --gs-glow-scale: 2.5;
+  --gs-glow-radius: 0;
+  --gs-rotate: 900;
+  animation-play-state: paused;
+}
+
+.btn-shine-border:hover .btn-glow::after {
+  animation-play-state: paused;
+}

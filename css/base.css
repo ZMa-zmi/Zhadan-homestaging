@@ -1,3 +1,53 @@
+/* ===== Font Faces ===== */
+@font-face {
+  font-family: 'DarkDeco';
+  src: url('../dark-deco-26.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sonko';
+  src: url('../SONKO/Sonko-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+
 /* ===== Modern Reset ===== */
 *,
 *::before,
@@ -26,22 +76,35 @@ body {
   overflow-x: hidden;
 }
 
+
+
 body.no-scroll {
   overflow: hidden;
 }
 
 /* ===== Typography ===== */
 h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  font-weight: 700;
   line-height: var(--lh-heading);
-  letter-spacing: var(--ls-heading);
+  letter-spacing: -0.02em;
   color: var(--color-text);
 }
 
-h1 { font-size: var(--fs-h1); }
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: 900;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+}
 
 p {
   margin-bottom: var(--space-sm);
@@ -91,9 +154,9 @@ ul, ol {
   padding: 0.875rem 2rem;
   background-color: var(--color-primary);
   color: var(--color-white);
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--fs-button);
-  font-weight: var(--fw-semibold);
+  font-weight: 600;
   border: none;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
@@ -102,6 +165,8 @@ ul, ol {
     transform var(--transition-base),
     box-shadow var(--transition-base);
   text-decoration: none;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .btn-primary:hover {
@@ -123,9 +188,9 @@ ul, ol {
   padding: 0.875rem 2rem;
   background-color: transparent;
   color: var(--color-primary);
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--fs-button);
-  font-weight: var(--fw-semibold);
+  font-weight: 600;
   border: 2px solid var(--color-primary);
   border-radius: var(--border-radius-sm);
   cursor: pointer;
@@ -134,6 +199,8 @@ ul, ol {
     color var(--transition-base),
     transform var(--transition-base);
   text-decoration: none;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .btn-outline:hover {
@@ -141,6 +208,7 @@ ul, ol {
   color: var(--color-white);
   transform: translateY(-2px);
 }
+
 
 /* ===== Utilities ===== */
 .sr-only {
@@ -158,6 +226,9 @@ ul, ol {
 .section__title {
   text-align: center;
   margin-bottom: var(--space-sm);
+  font-family: var(--font-decorative);
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .section__subtitle {

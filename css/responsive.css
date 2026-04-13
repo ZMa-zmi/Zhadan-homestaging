@@ -4,8 +4,19 @@
     --container-padding: 2rem;
     --space-section: var(--space-xl);
   }
+}
 
+/* ===== Pricing: 2-col at medium tablet ===== */
+@media (max-width: 960px) and (min-width: 810px) {
+  .pricing__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
+  .pricing-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 420px;
+    margin-inline: auto;
+  }
 }
 
 /* ===== Mobile: ≤809px ===== */
@@ -17,11 +28,11 @@
   }
 
   /* ----- Header Mobile ----- */
-  .header__logo {
-    margin-right: auto;
+  .header__nav:not(.is-open) {
+    display: none;
   }
 
-  .header__cta {
+  .header__cta-btn {
     display: none;
   }
 
@@ -30,43 +41,14 @@
     flex-shrink: 0;
   }
 
-  .header__nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100vh;
-    height: 100dvh;
-    background-color: var(--color-bg);
-    padding: calc(var(--header-height) + var(--space-lg)) var(--space-lg) var(--space-lg);
-    transform: translateX(100%);
-    transition: transform var(--transition-base);
-    box-shadow: -8px 0 32px rgba(36, 60, 44, 0.1);
-    z-index: var(--z-header);
-  }
-
-  .header__nav--open {
-    transform: translateX(0);
-  }
-
-  .header__nav-list {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-md);
-  }
-
-  .header__nav-link {
-    font-size: 1.125rem;
-  }
-
   /* ----- Hero Mobile ----- */
-  .hero {
-    min-height: 80vh;
+  .hero__page-title {
+    left: 1.25rem;
+    max-width: 260px;
   }
 
-  .hero__content {
-    max-width: 100%;
-    padding: var(--space-lg) var(--container-padding);
+  .hero__brand-wordmark {
+    padding: 0 1rem 1.5rem 1rem;
   }
 
   /* ----- Advantages Mobile ----- */
@@ -93,7 +75,24 @@
   /* ----- Pricing Mobile ----- */
   .pricing__grid {
     grid-template-columns: 1fr;
-    gap: var(--space-md);
+    gap: 2.5rem;
+  }
+
+  /* Remove tilt on mobile for readability */
+  .pricing-card:nth-child(1),
+  .pricing-card:nth-child(2),
+  .pricing-card:nth-child(3) {
+    rotate: none;
+    margin-top: 0;
+  }
+
+  /* Reduce shadow offset on mobile */
+  .pricing-card__shadow {
+    translate: 5px 5px;
+  }
+
+  .pricing-card:hover .pricing-card__shadow {
+    translate: 7px 7px;
   }
 
 
