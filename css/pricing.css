@@ -243,12 +243,13 @@
 .pricing-card__header {
   position: relative;
   margin-bottom: 1.5rem;
+  overflow: hidden;
 }
 
 .pricing-card__number {
   position: absolute;
-  top: -0.5rem;
-  right: -0.25rem;
+  top: -2rem;
+  right: -1rem;
   font-family: var(--font-decorative);
   font-size: 5rem;
   line-height: 1;
@@ -256,6 +257,7 @@
   pointer-events: none;
   user-select: none;
   transition: color 0.3s ease;
+  z-index: 0;
 }
 
 .pricing-card__name {
@@ -265,6 +267,9 @@
   letter-spacing: -0.01em;
   line-height: 1.15;
   margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+  padding-right: 0.5rem;
 }
 
 /* ===== Divider ===== */
