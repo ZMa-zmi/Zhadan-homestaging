@@ -14,10 +14,10 @@
   --color-overlay: rgba(36, 60, 44, 0.65);
 
   /* ===== Typography ===== */
-  --font-decorative: 'DarkDeco', serif;
-  --font-display: 'Sonko', sans-serif;
-  --font-heading: 'Sonko', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-decorative: 'Architexture', serif;
+  --font-display: 'Architexture', sans-serif;
+  --font-heading: 'Architexture', sans-serif;
+  --font-body: 'Architexture', sans-serif;
 
   --fs-h1: clamp(2.2rem, 5.2vw, 3.8rem);
   --fs-h2: clamp(1.9rem, 4.2vw, 3rem);
