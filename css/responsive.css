@@ -62,12 +62,6 @@
   .header__burger {
     display: flex;
     flex-shrink: 0;
-    position: relative;
-    z-index: calc(var(--z-modal) - 5); /* 195 */
-  }
-
-  /* When menu is open, fix burger so it floats above the full-screen overlay (z-190) */
-  .header__burger[aria-expanded="true"] {
     position: fixed;
     top: calc((var(--header-height) - 32px) / 2);
     right: var(--container-padding);
@@ -149,6 +143,40 @@
     transform: scale(0.97);
   }
 
+  /* Close button inside mobile nav overlay */
+  .header__nav-close {
+    position: absolute;
+    top: calc((var(--header-height) - 32px) / 2);
+    right: var(--container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.35rem;
+    line-height: 1;
+    padding: 0;
+    border-radius: 50%;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .header__nav-close:hover,
+  .header__nav-close:focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    transform: rotate(90deg);
+  }
+
+  .header__nav-close:active {
+    transform: scale(0.88) rotate(90deg);
+  }
+
   /* ============================================
      HERO — Mobile
      ============================================ */
@@ -171,8 +199,16 @@
     white-space: normal;
     word-break: break-word;
     hyphens: auto;
-    line-height: 1.1;
+    line-height: 1.25;
   }
+
+  .wordmark--mobile:first-of-type {
+    margin-bottom: 0.15em;
+  }
+
+  /* Mobile: hide single-line, show two-line spans */
+  .wordmark--desktop { display: none !important; }
+  .wordmark--mobile  { display: block !important; }
 
   /* ============================================
      ADVANTAGES — Mobile

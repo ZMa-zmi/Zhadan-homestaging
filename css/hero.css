@@ -96,6 +96,10 @@
   text-transform: inherit;
 }
 
+/* Desktop: show single-line, hide two-line spans */
+.hero__brand-wordmark .wordmark--mobile { display: none; }
+.hero__brand-wordmark .wordmark--desktop { display: block; }
+
 @keyframes wordmarkIn {
   from { transform: translateY(120%); }
   to   { transform: translateY(0); }

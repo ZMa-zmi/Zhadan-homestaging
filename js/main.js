@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
 
   if (burger && nav) {
+    // Inject close button into mobile nav (once)
+    if (!nav.querySelector('.header__nav-close')) {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'header__nav-close';
+      closeBtn.setAttribute('aria-label', 'Закрыть меню');
+      closeBtn.innerHTML = '&#x2715;';
+      nav.insertBefore(closeBtn, nav.firstChild);
+      closeBtn.addEventListener('click', () => closeMenu());
+    }
+
     // Inject CTA link into mobile nav (once)
     if (!nav.querySelector('.header__nav-cta')) {
       const ctaLink = document.createElement('a');

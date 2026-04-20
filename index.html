@@ -34,7 +34,7 @@
 
   <!-- JS -->
   <script src="js/main.js" defer></script>
-  <script src="js/slider.js" defer></script>
+
   <script src="js/portfolio.js" defer></script>
   <script src="js/form.js" defer></script>
   <script src="js/modal.js" defer></script>
@@ -119,10 +119,20 @@
 
       <!-- Giant wordmark at bottom (Tilesuite pattern) -->
       <div class="hero__brand-wordmark" id="wordmark" aria-hidden="true">
-        <span data-text-effect
+        <!-- Desktop: single line -->
+        <span class="wordmark--desktop" data-text-effect
               data-text-effect-preset="blur"
               data-text-effect-per="char"
               data-text-effect-delay="0.2">ЖаданСтейджинг</span>
+        <!-- Mobile: two lines -->
+        <span class="wordmark--mobile" data-text-effect
+              data-text-effect-preset="blur"
+              data-text-effect-per="char"
+              data-text-effect-delay="0.2">Жадан</span>
+        <span class="wordmark--mobile" data-text-effect
+              data-text-effect-preset="blur"
+              data-text-effect-per="char"
+              data-text-effect-delay="0.5">Стейджинг</span>
       </div>
     </section>
 

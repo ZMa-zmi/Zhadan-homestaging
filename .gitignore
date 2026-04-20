@@ -1,0 +1,14 @@
+# Dev tools
+node_modules/
+*.log
+
+# Temp / screenshots
+temporary screenshots/
+temp/
+
+# Claude session logs (dev only)
+.claude/logs/
+
+# OS
+.DS_Store
+Thumbs.db
