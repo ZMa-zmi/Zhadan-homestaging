@@ -153,6 +153,11 @@
   opacity: 0.8;
 }
 
+/* ===== Nav close button (mobile only) ===== */
+.header__nav-close {
+  display: none;
+}
+
 /* ===== Burger (mobile) ===== */
 .header__burger {
   display: none;
